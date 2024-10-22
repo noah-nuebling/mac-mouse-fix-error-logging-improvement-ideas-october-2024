@@ -56,8 +56,8 @@ Currently, in Mac Mouse Fix, we set a logLevel inside CocoaLumberJack based on t
    Here's a description of the 4 logLevels in the unified logging system from `man log`:
       `level: {off | default | info | debug} The level is a hierarchy, e.g. debug implies debug, info, and default.`
 
-   If we end up using the unified system log for storing logs (which seems like the best way, although I haven't investigated alternatives much), then the CCLJ logLevels are redundant! 
-   For example, if we set the CocoaLumberJack logLevel to `debug`, but the OS logLevel is `default` then the app would produce `debug` and `info` messages but they would all immediately be thrown away by the unified system log, without being stored anywhere. If the situation was reversed, then the unified system log would be expecting `debug` and `info` messages but the app would never produce them.
+   If we end up using the unified system log for storing logs (which seems like the best way, although I haven't investigated alternatives much), then the CCLJ logLevels are redundant and they complicate things! 
+   For example, if we set the CocoaLumberJzack logLevel to `debug`, but the OS logLevel is `default` then the app would produce `debug` and `info` messages but they would all immediately be thrown away by the unified system log, without being stored anywhere. If the situation was reversed, then the unified system log would be expecting `debug` and `info` messages but the app would never produce them.
 
    -> Therefore, (to simplify the process of enabling full, verbose logs for users) we should probably **synchronize the logLevel** between the app and the OS ('OS' meaning the unified system log)
    (That is, unless we end up using - instead of the unified logging system - some custom 'logging backend' for CocoaLumberJack (This custom backend would (perhaps among other things I can't remember rn) manage writing the logs to a file instead of the unified logging system managing that.)
