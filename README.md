@@ -142,7 +142,7 @@ https://beta.apple.com/download/1017668
 ## Other
 
 Stuff I picked up from watching the WWDC 2016 Session: [6]
-- The os_log docs speak about logs that are stored to disk and logs that are stored to memory. As far as I understand the purpose of the 'stored in memory' messages is that they do also get written to disk if an OS_LOG_TYPE_ERROR or OS_LOG_TYPE_FAULT message is sent afterwards. OS_LOG_TYPE_ERROR denotes process-level errors, while OS_LOG_TYPE_FAULT denotes errors on the scope of multiple processes. OS_LOG_TYPE_FAULT might cause even more extensive debug information to be saved than OS_LOG_TYPE_ERROR Quote: "Use `os_log_error` to cause additional information capture from app" "Use `os_log_fault` to cause additional information capture from system"
+- The os_log docs speak about logs that are stored to disk and logs that are stored to memory. As far as I understand the purpose of the 'stored in memory' messages is that they do also get written to disk if an OS_LOG_TYPE_ERROR or OS_LOG_TYPE_FAULT message is sent afterwards. OS_LOG_TYPE_ERROR denotes process-level errors, while OS_LOG_TYPE_FAULT denotes errors on the scope of multiple processes. OS_LOG_TYPE_FAULT might cause even more extensive debug information to be saved than OS_LOG_TYPE_ERROR Quote: "Use `os_log_error` to cause additional information capture from app" "Use `os_log_fault` to cause additional information capture from system". I think we should think of FAULT and ERROR as explicit ways to trigger such information capture and use default log level for 'normal' errors.
 - Not only strings are private by default: "Dynamic strings, collections, and objects are assumed to be private."
 
 # Sources
