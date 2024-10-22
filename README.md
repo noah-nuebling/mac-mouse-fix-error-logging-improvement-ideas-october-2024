@@ -62,8 +62,8 @@ Currently, in Mac Mouse Fix, we set a logLevel inside CocoaLumberJack based on t
    -> Therefore, (to simplify the process of enabling full, verbose logs for users) we should probably **synchronize the logLevel** between the app and the OS ('OS' meaning the unified system log)
    (That is, unless we end up using - instead of the unified system log - some custom 'logging backend' for CocoaLumberJack (This custom backend would (perhaps among other things I can't remember rn) manage writing the logs to a file instead of the unified system log managing that.)
 
-  To 'synchronize' the log levels, and clean things up, we could do the following:
-    - We could remove CocoaLumberJack from our codebase, and then redefine the CCLJ logging macros to invoke os_log() instead. E.g. DDLogDebug(...) would invoke os_log_debug(OS_LOG_DEFAULT, ...). These new macros would always cause some overhead, instead of being stripped by the compiler in release builds - which I think is how CocoaLumberJack works - but I believe the overhead would be very small, and the simplification might be worth it.
+  To 'synchronize' the log levels, and clean things up, we could do the following:\
+  We could remove CocoaLumberJack from our codebase, and then redefine the CCLJ logging macros to invoke os_log() instead. E.g. DDLogDebug(...) would invoke os_log_debug(OS_LOG_DEFAULT, ...). These new macros would always cause some overhead, instead of being stripped by the compiler in release builds - which I think is how CocoaLumberJack works - but I believe the overhead would be very small, and the simplification might be worth it.
 
 #### Simplification: No need for DEBUG builds
 
@@ -77,8 +77,8 @@ When we currently distribute 'debug builds' to users with hard-to-reproduce issu
 It seems better to control logging verbosity separately from the DEBUG compiler flag - this would then make it possible to enable verbose logging for any build of Mac Mouse Fix by just running a terminal command. (or clicking a button in the app, or installing a profile, more on that later.)
 
 To make this a reality we need to make 2 changes to the codebase: 
-- 1. The refactor propsed above, where we remove CocoaLumberJack logLevels and just rely on the logLevels that the unified system log provides.
-- 2. We already have a way to control logging-verbosity independent of the DEBUG flag it's called `if (runningPrerelease()) {`. Currently it checks the DEBUG flag as well as whether the app's version string contains 'Alpha' or 'Beta'. We could simply replace `runningPrerelease()` with a new function called something like `verboseLogsEnabled()` and define that in terms of `os_log_info_enabled(OS_LOG_DEFAULT)` and/or `os_log_debug_enabled(OS_LOG_DEFAULT)`. (These macros let us monitor the current logLevel that the unified system log assigned to our process.)
+- 1. The refactor propsed above, where we remove CocoaLumberJack alongside its logLevels in favour of `os_log()` - relying on the logLevels that the unified system log provides.
+- 2. We already have a way to control logging-verbosity independent of the DEBUG flag it's called `runningPrerelease()`. Currently it checks the DEBUG flag as well as whether the app's version string contains 'Alpha' or 'Beta'. We could simply replace `runningPrerelease()` with a new function called something like `verboseLogsEnabled()` and define that in terms of `os_log_info_enabled(OS_LOG_DEFAULT)` and/or `os_log_debug_enabled(OS_LOG_DEFAULT)`. (These macros let us monitor the current logLevel that the unified system log assigned to our process.)
 
 -> With these 2 changes, the app's logging behavior would be fully controlled by the unified system log! Meaning that we could enable full, verbose logs at runtime with a single `log config` terminal command (* with one caveat - stripping of private data - more on that later)
 
@@ -120,14 +120,14 @@ However, Mac Mouse Fix basically has access to zero sensitive data (at least tha
 
 ## Steps 2. to 6.
 
-I'm getting to tired to write stuff in detail, but here are a few more thoughts I had:
+I'm getting too tired to write stuff in detail, but here are a few more thoughts I had on the rest of the steps:
 
 2. The user needs to reproduce the issue
    -> This can't be simplified
 3. The user needs to make a timestamp for when the issue occured (Otherwise we're unlikely to find the relevant logs among millions)
 4. The user needs to retrieve the stored logs
 5. The user needs to send the retrieved logs to us alongside the timestamp
-6. The user needs to disable production and storage of full, verbose logs after they have sent the logs (as not to waste resources)
+6. The user needs to disable production and storage of full, verbose logs after they have sent the logs (as not to waste resources)\
    -> 3 - 6. could all be turned into one or two steps for the user: Perhaps we could have a special status-bar-item while recording debug logs, and the user could click on that and then choose an option called: 'The Bug Just Happened!...' This would make a timestamp, then gather diagnostic data, and then automatically compose an email addressed to me with the diagnostic data as an attachment, and then turn the logging off. (We'd also have to inform the user about the privacy implications of sending the data, see Quinn's post [0] and the `sudo sysdiagnose` privacy message [11] for more). How could we implement step 4. (retrieving stored logs)? We could programmatically gather logs for the user using the `sudo sysdiagnose` command, this gathers extremely extensive diagnostic data and seems to be what Apple requests from users (and what Quinn recommends for debug hard-to-reproduce problems [0]). Alternatively, we can find some diagnostic data like crash reports directly in the library, and if we use another backend for CocoaLumberJack we could probably store logs in a custom file and then just read that. Sysdiagnose is super extensive, but its complications are that it takes a few minutes to gather the info, and it requires administrator priviledges. This wouldn't be the case for a different CocoaLumberJack backend I think, so that might be easier to implement. I can't really think of any other ways to do Step 5. (retrieving stored logs) I believe implementing the status-bar-item I mentioned might be quite hard. Alternatively, we could give the user step by step instructions - Apple did this for me when I had iCloud issues. Here are their instructions: (Their instruction about taking a screenshot to gather a timestamp for the bug is pretty smart.)
    1. Download the logging profile onto your Mac from the URL address below.
 https://beta.apple.com/download/1017668
