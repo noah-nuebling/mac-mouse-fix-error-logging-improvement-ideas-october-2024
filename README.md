@@ -1,4 +1,4 @@
-# Error Logging Improvements Ideas for Mac Mouse Fix (October 2024)
+ # Error Logging Improvements Ideas for Mac Mouse Fix (October 2024)
 
 > [!NOTE]
 > This repo is just a note to jot down my ideas. Not sure why I'm creating a GitHub repo for this instead of just an Apple Note or something. I hope It's not a terrible idea to make 'Note Taking Repos'. Might be bad that we can't sort / filter them if we create a lot of different ones?
@@ -53,14 +53,14 @@ Currently, in Mac Mouse Fix, we set a logLevel inside CocoaLumberJack based on t
 #### Simplification: Unifying OS logLevel with CocoaLumberJack logLevel
    However, these logs from CocoaLumberJack end up in the unified system log, which has a separate log-level-based-filtering system from CCLJ.
    Both systems have the same concept of hierarchical logLevels, and their names are also the same IIRC.
-   Here's a description of the 4 logLevels in the unified logging system from `man log`:
+   Here's a description of the 4 logLevels in the unified system log from `man log`:
       `level: {off | default | info | debug} The level is a hierarchy, e.g. debug implies debug, info, and default.`
 
    If we end up using the unified system log for storing logs (which seems like the best way, although I haven't investigated alternatives much), then the CCLJ logLevels are redundant and they complicate things! 
    For example, if we set the CocoaLumberJzack logLevel to `debug`, but the OS logLevel is `default` then the app would produce `debug` and `info` messages but they would all immediately be thrown away by the unified system log, without being stored anywhere. If the situation was reversed, then the unified system log would be expecting `debug` and `info` messages but the app would never produce them.
 
    -> Therefore, (to simplify the process of enabling full, verbose logs for users) we should probably **synchronize the logLevel** between the app and the OS ('OS' meaning the unified system log)
-   (That is, unless we end up using - instead of the unified logging system - some custom 'logging backend' for CocoaLumberJack (This custom backend would (perhaps among other things I can't remember rn) manage writing the logs to a file instead of the unified logging system managing that.)
+   (That is, unless we end up using - instead of the unified system log - some custom 'logging backend' for CocoaLumberJack (This custom backend would (perhaps among other things I can't remember rn) manage writing the logs to a file instead of the unified system log managing that.)
 
   To 'synchronize' the log levels, and clean things up, we could do the following:
     - We could remove CocoaLumberJack from our codebase, and then redefine the CCLJ logging macros to invoke os_log() instead. E.g. DDLogDebug(...) would invoke os_log_debug(OS_LOG_DEFAULT, ...). These new macros would always cause some overhead, instead of being stripped by the compiler in release builds - which I think is how CocoaLumberJack works - but I believe the overhead would be very small, and the simplification might be worth it.
@@ -77,10 +77,10 @@ When we currently distribute 'debug builds' to users with hard-to-reproduce issu
 It seems better to control logging verbosity separately from the DEBUG compiler flag - this would then make it possible to enable verbose logging for any build of Mac Mouse Fix by just running a terminal command. (or clicking a button in the app, or installing a profile, more on that later.)
 
 To make this a reality we need to make 2 changes to the codebase: 
-- 1. The refactor propsed above, where we remove CocoaLumberJack logLevels and just rely on the logLevels that the unified logging system provides.
-- 2. We already have a way to control logging-verbosity independent of the DEBUG flag it's called `if (runningPrerelease()) {`. Currently it checks the DEBUG flag as well as whether the app's version string contains 'Alpha' or 'Beta'. We could simply replace `runningPrerelease()` with a new function called something like `verboseLogsEnabled()` and define that in terms of `os_log_info_enabled(OS_LOG_DEFAULT)` and/or `os_log_debug_enabled(OS_LOG_DEFAULT)`. (These macros let us monitor the current logLevel that the unified logging system assigned to our process.)
+- 1. The refactor propsed above, where we remove CocoaLumberJack logLevels and just rely on the logLevels that the unified system log provides.
+- 2. We already have a way to control logging-verbosity independent of the DEBUG flag it's called `if (runningPrerelease()) {`. Currently it checks the DEBUG flag as well as whether the app's version string contains 'Alpha' or 'Beta'. We could simply replace `runningPrerelease()` with a new function called something like `verboseLogsEnabled()` and define that in terms of `os_log_info_enabled(OS_LOG_DEFAULT)` and/or `os_log_debug_enabled(OS_LOG_DEFAULT)`. (These macros let us monitor the current logLevel that the unified system log assigned to our process.)
 
--> With these 2 changes, the app's logging behavior would be fully controlled by the unified logging system! Meaning that we could enable full, verbose logs at runtime with a single `log config` terminal command (* with one caveat - stripping of private data - more on that later)
+-> With these 2 changes, the app's logging behavior would be fully controlled by the unified system log! Meaning that we could enable full, verbose logs at runtime with a single `log config` terminal command (* with one caveat - stripping of private data - more on that later)
 
 #### Implementation Details: How to change OS logLevel?
 
