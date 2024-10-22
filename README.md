@@ -50,7 +50,7 @@ The question is - how can we design our system such that these steps as simple a
 
 Currently, in Mac Mouse Fix, we set a logLevel inside CocoaLumberJack based on the type of build of Mac Mouse Fix (IIRC, the CCLJ logLevel is `default` for release builds and `debug` for `prerelease builds` which are builds that either have the `DEBUG` compiler flag set or that Have 'Beta' or 'Alpha' in their version string.)
 
-#### Simplification: OS logLevel vs CocoaLumberJack logLevel
+#### Simplification: Unifying OS logLevel with CocoaLumberJack logLevel
    However, these logs from CocoaLumberJack end up in the unified system log, which has a separate log-level-based-filtering system from CCLJ.
    Both systems have the same concept of hierarchical logLevels, and their names are also the same IIRC.
    Here's a description of the 4 logLevels in the unified logging system from `man log`:
