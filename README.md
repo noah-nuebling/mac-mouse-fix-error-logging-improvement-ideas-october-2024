@@ -148,7 +148,7 @@ https://beta.apple.com/download/1017668
 - [3] Apple Article "Generating Log Messages from Your Code": https://developer.apple.com/documentation/os/logging/generating_log_messages_from_your_code?language=objc
 - [4] Apple Article "Viewing Log Messages": https://developer.apple.com/documentation/os/logging/viewing_log_messages?language=objc
 - [5] Apple Article "Customizing Logging Behavior While Debugging": https://developer.apple.com/documentation/os/logging/customizing_logging_behavior_while_debugging?language=objc
-- [6] WWDC 2016 Session 721 "Unified Logging and Activity Tracing" https://devstreaming-cdn.apple.com/videos/wwdc/2016/721wh2etddp4ghxhpcg/721/721_hd_unified_logging_and_activity_tracing.mp4?dl=1
+- [6] WWDC 2016 Session 721 "Unified Logging and Activity Tracing" https://devstreaming-cdn.apple.com/videos/wwdc/2016/721wh2etddp4ghxhpcg/721/721_hd_unified_logging_and_activity_tracing.mp4
 - [7] `man 1 log`
 - [8] `man 3 os_log` - overview and c api
 - [9] `man 5 os_log` - logging configuration profiles
