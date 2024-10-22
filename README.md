@@ -139,6 +139,12 @@ https://beta.apple.com/download/1017668
    7. When the sysdiagnose is complete (it may take a few minutes), Finder will open a window to the directory where the log file has been created in /var/tmp/. Attach that back to us, along with the screenshot.
    8. Turn off the extra logging by removing the debug logging profile in the Profiles pref pane, using the "-" button. Then reboot your machine again
 
+## Other
+
+Stuff I picked up from watching the WWDC 2016 Session:
+- The os_log docs speak about logs that are stored to disk and logs that are stored to memory. As far as I understand the purpose of the 'stored in memory' messages is that they do also get written to disk if an OS_LOG_TYPE_ERROR or OS_LOG_TYPE_FAULT message is sent afterwards. OS_LOG_TYPE_ERROR denotes process-level errors, while OS_LOG_TYPE_FAULT denotes errors on the scope of multiple processes. OS_LOG_TYPE_FAULT might cause even more extensive debug information to be saved than OS_LOG_TYPE_ERROR Quote: "Use `os_log_error` to cause additional information capture from app" "Use `os_log_fault` to cause additional information capture from system"
+- Not only strings are private by default: "Dynamic strings, collections, and objects are assumed to be private."
+
 # Sources
 
 - [-1] Quinn "The Eskimo reply to "Xcode 15 Structured log always redacting <private> strings": https://developer.apple.com/forums/thread/738648?answerId=766975022#766975022
