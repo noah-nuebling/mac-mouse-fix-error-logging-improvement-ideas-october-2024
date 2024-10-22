@@ -1,7 +1,7 @@
 # Error Logging Improvements Ideas for Mac Mouse Fix (October 2024)
 
 > [!NOTE]
-> This repo is just a note to jot down my ideas. Not sure why I'm creating a GitHub repo for this instead of just an Apple Note or something. I hope It's not a terrible idea to make 'Note Taking Repos'. Might be bad that we can't sort / filter them?
+> This repo is just a note to jot down my ideas. Not sure why I'm creating a GitHub repo for this instead of just an Apple Note or something. I hope It's not a terrible idea to make 'Note Taking Repos'. Might be bad that we can't sort / filter them if we create a lot of different ones?
 
 ### Background
 
