@@ -65,7 +65,8 @@ Currently, in Mac Mouse Fix, we set a logLevel inside CocoaLumberJack based on t
   To 'synchronize' the log levels, and clean things up, we could do the following:\
   1. We could remove CocoaLumberJack from our codebase, and use the unified system log directly. To do this we could simply redefine the CCLJ logging macros to invoke os_log() instead. E.g. DDLogDebug(...) would invoke os_log_debug(OS_LOG_DEFAULT, ...). These new macros might cause some additional overhead, since they wouldn't be stripped out by the compiler in release builds - which I think is what CocoaLumberJack does - but I believe the overhead would be very small.
   2. We could remove the dependency on the unified system log and use a custom logging backend for CocoaLumberJack instead. Then we could fully control the logging behavior by modifying the state of CocoaLumberJack while the app is running.
-  3. We could configure our Info.plist to always enable the highest logLevel (`debug`) on the OS level, so that the OS would never filter our logs. (More on that below) Then we could control the logLevel using just the app-internal CocoaLumberJack logLevel
+  3. We could configure our Info.plist to always enable the highest logLevel (`debug`) on the OS level, so that the OS would never filter our logs. (More on that below) Then we could control the logLevel using just the app-internal CocoaLumberJack logLevel\
+     -> HOWEVER, if we want to debug problems that involve other processes than Mac Mouse Fix. E.g. if launchd doesn't start the helper properly, then we not only need to control our own logLevels, we'd also wanna elevate the logLevel of other processes (like launchd in the example) -> This would speak for relying on OS log level to control the logging of MMF, because then we could have a unified way to change the logLevel of MMF and other processes it's interacting with (Such a 'unified way' would e.g. be a configuration profile, read below for more on that.)
 
 #### Simplification: No need for DEBUG builds
 
@@ -149,8 +150,10 @@ Stuff I picked up from watching the WWDC 2016 Session: [6]
 
 Update (next day, Oct 23 2024): Another thing I haven't looked much into is exporting logs from inside the app. 
 If we use the unified system log we could
-- Use `sudo sysdiagnose` programmatically - but it would require the user to enter the admin password and would take a few minutes. Alternatively we could use 
-- Use OSLogStore [13], but it only seems to be able to retrieve logs from the current process unless you're on macOS 12.0 or later where there's an option to retrieve the entire system log. If we can retrieve the system log then we could just also programmatically gather crash reports from the library and that should be all the debug info we need. The other stuff inside a full sysdiagnose archive doesn't seem too useful (but I haven't thought about this much, so maybe it's better to heir on the side of collecting more information - which sysdiagnose would do?)
+- Use `sudo sysdiagnose` programmatically - but it would require the user to enter the admin password and would take a few minutes.
+- Use OSLogStore [13], but it only seems to be able to retrieve logs from the current process unless you're on macOS 12.0 or later where there's an option to retrieve the entire system log.
+- Use the `log collect` or `log show` command line tool [7]  programmatically. It should be able to the same things as `OSLogStore` but it's perhaps more moreful. It doesn't even require `sudo` IIRC.
+- >> If we can retrieve the system log using `log` clt or `OSLogStore`, then we could just also programmatically gather crash reports from the library and that should be all the debug info we need. The other stuff inside a full sysdiagnose archive doesn't seem too useful (but I haven't thought about this much, so maybe it's better to heir on the side of collecting more information - which sysdiagnose would do? ... sysdiagnose also collects the attached USB Devices, which might be useful? so we can see what mouse the user is using ... but they could tell us or we could gather that info separately inside MMF...)
 
 # Sources
 
