@@ -63,7 +63,9 @@ Currently, in Mac Mouse Fix, we set a logLevel inside CocoaLumberJack based on t
    (That is, unless we end up using - instead of the unified system log - some custom 'logging backend' for CocoaLumberJack (This custom backend would (perhaps among other things I can't remember rn) manage writing the logs to a file instead of the unified system log managing that.)
 
   To 'synchronize' the log levels, and clean things up, we could do the following:\
-  We could remove CocoaLumberJack from our codebase, and then redefine the CCLJ logging macros to invoke os_log() instead. E.g. DDLogDebug(...) would invoke os_log_debug(OS_LOG_DEFAULT, ...). These new macros would always cause some overhead, instead of being stripped by the compiler in release builds - which I think is how CocoaLumberJack works - but I believe the overhead would be very small, and the simplification might be worth it.
+  1. We could remove CocoaLumberJack from our codebase, and use the unified system log directly. To do this we could simply redefine the CCLJ logging macros to invoke os_log() instead. E.g. DDLogDebug(...) would invoke os_log_debug(OS_LOG_DEFAULT, ...). These new macros might cause some additional overhead, since they wouldn't be stripped out by the compiler in release builds - which I think is what CocoaLumberJack does - but I believe the overhead would be very small.
+  2. We could remove the dependency on the unified system log and use a custom logging backend for CocoaLumberJack instead. Then we could fully control the logging behavior by modifying the state of CocoaLumberJack while the app is running.
+  3. We could configure our Info.plist to always enable the highest logLevel (`debug`) on the OS level, so that the OS would never filter our logs. (More on that below) Then we could control the logLevel using just the app-internal CocoaLumberJack logLevel
 
 #### Simplification: No need for DEBUG builds
 
@@ -145,6 +147,11 @@ Stuff I picked up from watching the WWDC 2016 Session: [6]
 - The os_log docs speak about logs that are stored to disk and logs that are stored to memory. As far as I understand the purpose of the 'stored in memory' messages is that they do also get written to disk if an OS_LOG_TYPE_ERROR or OS_LOG_TYPE_FAULT message is sent afterwards. OS_LOG_TYPE_ERROR denotes process-level errors, while OS_LOG_TYPE_FAULT denotes errors on the scope of multiple processes. OS_LOG_TYPE_FAULT might cause even more extensive debug information to be saved than OS_LOG_TYPE_ERROR Quote: "Use `os_log_error` to cause additional information capture from app" "Use `os_log_fault` to cause additional information capture from system". I think we should think of FAULT and ERROR as explicit ways to trigger such information capture and use default log level for 'normal' errors.
 - Not only strings are private by default: "Dynamic strings, collections, and objects are assumed to be private."
 
+Update (next day, Oct 23 2024): Another thing I haven't looked much into is exporting logs from inside the app. 
+If we use the unified system log we could
+- Use `sudo sysdiagnose` programmatically - but it would require the user to enter the admin password and would take a few minutes. Alternatively we could use 
+- Use OSLogStore [13], but it only seems to be able to retrieve logs from the current process unless you're on macOS 12.0 or later where there's an option to retrieve the entire system log. If we can retrieve the system log then we could just also programmatically gather crash reports from the library and that should be all the debug info we need. The other stuff inside a full sysdiagnose archive doesn't seem too useful (but I haven't thought about this much, so maybe it's better to heir on the side of collecting more information - which sysdiagnose would do?)
+
 # Sources
 
 - [-1] Quinn "The Eskimo reply to "Xcode 15 Structured log always redacting <private> strings": https://developer.apple.com/forums/thread/738648?answerId=766975022#766975022
@@ -160,3 +167,5 @@ Stuff I picked up from watching the WWDC 2016 Session: [6]
 - [9] `man 5 os_log` - logging configuration profiles
 - [10] Apple Developer > Bug Reporting > Profiles and Logs: https://developer.apple.com/bug-reporting/profiles-and-logs/?platform=macos
 - [11] `sysdiagnose` privacy message. Afaik, this shows up when running the command for the first time or when running it with the `-F` argument.
+- [12] CocoaLumberJack Discussion "Should everyone migrate to OSLog"? https://github.com/CocoaLumberjack/CocoaLumberjack/discussions/1363
+- [13] OSLogStore Documentation https://developer.apple.com/documentation/oslog/oslogstore?language=objc
