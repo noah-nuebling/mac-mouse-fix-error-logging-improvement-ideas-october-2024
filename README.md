@@ -39,7 +39,7 @@ So, in order for us to receive actionable Console Logs, the following **steps** 
 2. The user needs to reproduce the issue
 3. The user needs to make a timestamp for when the issue occured (Otherwise we're unlikely to find the relevant logs among millions)
 4. The user needs to retrieve the stored logs
-5. The user needs to send the retrieved logs to us alongside the timestamp (through a private channel if the logs might contain sensitive data)
+5. The user needs to send the retrieved logs to us alongside the timestamp (through a private channel if the logs might contain sensitive data, and we also need to inform users about the privacy implications)
 6. The user needs to disable production and storage of full, verbose logs after they have sent the logs (as not to waste resources)
 
 ^ These things are invariants - they need to happen no matter how we design our system. 
