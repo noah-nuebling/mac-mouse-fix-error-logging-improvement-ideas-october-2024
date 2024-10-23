@@ -109,7 +109,9 @@ The upside of using configuration profiles is that we could custom-craft them fo
 
 2. Info.plist
 
-This would require users to download a separate 'debug build'. It would be nicer if they could just keep using their app normally. Also, I'm not totally sure how to automate changing the Info.plist content based on build type. (Probably using plistbuddy inside a build script should work though - that's how we increment the build number currently)
+If we we use this feature as intended, this would require users to download a separate 'debug build'. It would be nicer if they could just keep using their app normally. Also, I'm not totally sure how to automate changing the Info.plist content based on build type. (Probably using plistbuddy inside a build script should work though - that's how we increment the build number currently)
+
+Alternatively we could just hardcode Mac Mouse Fix's logLevel to `debug` using the Info.plist and then use internal logLevels to control logging behavior. (I think I already wrote about this idea above under the section about 'synchronizing' logLevels between CocoaLumberJack and the unified system log.)
 
 3. `log` command-line-tool
 
