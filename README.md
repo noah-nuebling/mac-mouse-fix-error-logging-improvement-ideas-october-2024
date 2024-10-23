@@ -9,8 +9,6 @@ So today (Oct 22 2024) I got sucked into researching how to improve bug reports 
 
 ## Motivation: We never get Console Logs
 
-So for mac-mouse-fix bug reports there are generally 3 tiers of actionable diagnostic data we request from users:
-
 1. Reproduction Steps
 2. Crash Reports
 3. Console Logs
