@@ -9,6 +9,8 @@ So today (Oct 22 2024) I got sucked into researching how to improve bug reports 
 
 ## Motivation: We never get Console Logs
 
+So for mac-mouse-fix bug reports there are generally 3 tiers of actionable diagnostic data we request from users:
+
 1. Reproduction Steps
 2. Crash Reports
 3. Console Logs
@@ -29,9 +31,9 @@ I think this is clearly prohibitively hard to do.
 ## How do we make it easier 
 ... for people to gather / send Diagnostic Data (primarily Console Logs)
 
-### Steps (that need to happen)
+### Steps
 
-So, in order for us to receive actionable Console Logs, the following things need to happen:
+So, in order for us to receive actionable Console Logs, the following **steps** need to happen:
 
 1. The user needs to enable production *and* storage of full, verbose logs
 2. The user needs to reproduce the issue
