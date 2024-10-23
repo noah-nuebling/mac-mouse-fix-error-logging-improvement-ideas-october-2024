@@ -103,6 +103,10 @@ Which of these 3 approaches should we choose?
 Apple seems to use profiles (They sent me a profile for this purpose when I experienced a bug with iCloud)
 However, configuration profiles take quite a few steps to install and they seem a bit scary. I think this might deter some users.
 
+The upside of using configuration profiles is that we could custom-craft them for the specific issue a user is experiencing - enabling verbose logs for all the processes that might be involved in the user's bug. 
+
+... The only relevant process I could think of is `launchd` which has failed to start "Mac Mouse Fix Helper" in a myriad of ways over the years. So I feel like this flexibility to elevate logLevels for arbitrary processes isn't needed. But I'm not sure. 
+
 2. Info.plist
 
 This would require users to download a separate 'debug build'. It would be nicer if they could just keep using their app normally. Also, I'm not totally sure how to automate changing the Info.plist content based on build type. (Probably using plistbuddy inside a build script should work though - that's how we increment the build number currently)
