@@ -65,8 +65,7 @@ Currently, in Mac Mouse Fix, we set a logLevel inside CocoaLumberJack based on t
   To 'synchronize' the log levels, and clean things up, we could do the following:\
   1. We could remove CocoaLumberJack from our codebase, and use the unified system log directly. To do this we could simply redefine the CCLJ logging macros to invoke os_log() instead. E.g. DDLogDebug(...) would invoke os_log_debug(OS_LOG_DEFAULT, ...). These new macros might cause some additional overhead, since they wouldn't be stripped out by the compiler in release builds - which I think is what CocoaLumberJack does - but I believe the overhead would be very small.
   2. We could remove the dependency on the unified system log and use a custom logging backend for CocoaLumberJack instead. Then we could fully control the logging behavior by modifying the state of CocoaLumberJack while the app is running.
-  3. We could configure our Info.plist to always enable the highest logLevel (`debug`) on the OS level, so that the OS would never filter our logs. (More on that below) Then we could control the logLevel using just the app-internal CocoaLumberJack logLevel\
-     -> HOWEVER, if we want to debug problems that involve other processes than Mac Mouse Fix. E.g. if launchd doesn't start the helper properly, then we not only need to control our own logLevels, we'd also wanna elevate the logLevel of other processes (like launchd in the example) -> This would speak for relying on OS log level to control the logging of MMF, because then we could have a unified way to change the logLevel of MMF and other processes it's interacting with (Such a 'unified way' would e.g. be a configuration profile, read below for more on that.)
+  3. We could configure our Info.plist to always enable the highest logLevel (`debug`) on the OS level, so that the OS would never filter our logs. (More on that below) Then we could control the logLevel using just the app-internal CocoaLumberJack logLevel.
 
 #### Simplification: No need for DEBUG builds
 
@@ -105,13 +104,15 @@ However, configuration profiles take quite a few steps to install and they seem 
 
 The upside of using configuration profiles is that we could custom-craft them for the specific issue a user is experiencing - enabling verbose logs for all the processes that might be involved in the user's bug. 
 
-... The only relevant process I could think of is `launchd` which has failed to start "Mac Mouse Fix Helper" in a myriad of ways over the years. So I feel like this flexibility to elevate logLevels for arbitrary processes isn't needed. But I'm not sure. 
+... The only relevant process I could think of is `launchd` which has failed to start "Mac Mouse Fix Helper" in a myriad of ways over the years. So I feel like this flexibility to elevate logLevels for arbitrary processes isn't needed, we could just hardcode elevated logLevels for relevant processes like `launchd` But I'm not sure. 
 
 2. Info.plist
 
 If we we use this feature as intended, this would require users to download a separate 'debug build'. It would be nicer if they could just keep using their app normally. Also, I'm not totally sure how to automate changing the Info.plist content based on build type. (Probably using plistbuddy inside a build script should work though - that's how we increment the build number currently)
 
-Alternatively we could just hardcode Mac Mouse Fix's logLevel to `debug` using the Info.plist and then use internal logLevels to control logging behavior. (I think I already wrote about this idea above under the section about 'synchronizing' logLevels between CocoaLumberJack and the unified system log.)
+Alternatively we could just hardcode Mac Mouse Fix's logLevel to `debug` using the Info.plist and then use internal logLevels to control logging behavior.
+
+-> HOWEVER, if we manage logLevels purely internally, trying to avoid modifying os log levels at all, we couldn't control the logLevel of other processes like `launchd`, which might be really helpful for some bugs!
 
 3. `log` command-line-tool
 
