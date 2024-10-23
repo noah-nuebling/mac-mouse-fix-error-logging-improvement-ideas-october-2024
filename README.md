@@ -78,11 +78,14 @@ When we currently distribute 'debug builds' to users with hard-to-reproduce issu
 
 It seems better to control logging verbosity separately from the DEBUG compiler flag - this would then make it possible to enable verbose logging for any build of Mac Mouse Fix by just running a terminal command. (or clicking a button in the app, or installing a profile, more on that later.)
 
-To make this a reality we need to make 2 changes to the codebase: 
+To make this a reality, we'd have to say goodbye to using compiler flags to control logging behavior at all, and instead we'd have to use a fully dynamic 'logLevel'. We could do this by either managing logLevels internally by using CocoaLumberJack logLevels / using `static` variables inside the app, or we could simply rely on the OS logLevels that the unified system log assigns to our process.
+
+To remove reliance on the DEBUG complier flag and let the app's logging be fully controlled by the OS we could make 2 simple changes to the codebase: 
+
 - 1. The refactor propsed above, where we remove CocoaLumberJack alongside its logLevels in favour of `os_log()` - relying on the logLevels that the unified system log provides.
 - 2. We already have a way to control logging-verbosity independent of the DEBUG flag it's called `runningPrerelease()`. Currently it checks the DEBUG flag as well as whether the app's version string contains 'Alpha' or 'Beta'. We could simply replace `runningPrerelease()` with a new function called something like `verboseLogsEnabled()` and define that in terms of `os_log_info_enabled(OS_LOG_DEFAULT)` and/or `os_log_debug_enabled(OS_LOG_DEFAULT)`. (These macros let us monitor the current logLevel that the unified system log assigned to our process.)
 
--> With these 2 changes, the app's logging behavior would be fully controlled by the unified system log! Meaning that we could enable full, verbose logs at runtime with a single `log config` terminal command (* with one caveat - stripping of private data - more on that later)
+-> With these 2 changes, the app's logging behavior would be fully controlled by the unified system log! Meaning that we could enable/disable full, verbose logs at runtime with a single `log config` terminal command (* with one caveat - stripping of private data - more on that later)
 
 #### Implementation Details: How to change OS logLevel?
 
@@ -104,7 +107,7 @@ However, configuration profiles take quite a few steps to install and they seem 
 
 The upside of using configuration profiles is that we could custom-craft them for the specific issue a user is experiencing - enabling verbose logs for all the processes that might be involved in the user's bug. 
 
-... The only relevant process I could think of is `launchd` which has failed to start "Mac Mouse Fix Helper" in a myriad of ways over the years. So I feel like this flexibility to elevate logLevels for arbitrary processes isn't needed, we could just hardcode elevated logLevels for relevant processes like `launchd` But I'm not sure. 
+... The only relevant process I could think of is `launchd` which has failed to start "Mac Mouse Fix Helper" in a myriad of ways over the years. So I feel like this flexibility to elevate logLevels for arbitrary processes isn't needed, (instead we could just hardcode elevated logLevels for relevant processes like `launchd`) But I'm not sure. 
 
 2. Info.plist
 
@@ -112,7 +115,8 @@ If we we use this feature as intended, this would require users to download a se
 
 Alternatively we could just hardcode Mac Mouse Fix's logLevel to `debug` using the Info.plist and then use internal logLevels to control logging behavior.
 
--> HOWEVER, if we manage logLevels purely internally, trying to avoid modifying os log levels at all, we couldn't control the logLevel of other processes like `launchd`, which might be really helpful for some bugs!
+-> HOWEVER, if we avoid modifying OS logLevels at all, (instead managing logLevels purely internally) we couldn't control the logLevel of other processes like `launchd` at all, which might be really helpful for some bugs! \
+💡 This is a pretty strong argument to *not* manage logLevels internally and instead try to make the app adhere to OS logLevels, and then give users an as-easy-as-possible way to control OS logLevels.
 
 3. `log` command-line-tool
 
