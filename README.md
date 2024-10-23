@@ -159,12 +159,29 @@ Stuff I picked up from watching the WWDC 2016 Session: [6] which was unclear to 
 - The os_log docs speak about logs that are stored to disk and logs that are stored to memory. As far as I understand the purpose of the 'stored in memory' messages is that they do also get written to disk IF an `OS_LOG_TYPE_ERROR` or `OS_LOG_TYPE_FAULT` message is sent afterwards. OS_LOG_TYPE_ERROR denotes process-level errors, while OS_LOG_TYPE_FAULT denotes errors on the scope of multiple processes. OS_LOG_TYPE_FAULT might cause even more extensive debug information to be saved than OS_LOG_TYPE_ERROR Quote: "Use `os_log_error` to cause additional information capture from app" "Use `os_log_fault` to cause additional information capture from system". Perhaps we should think of FAULT and ERROR as explicit ways to trigger such information capture and use default log level for 'normal' errors.
 - Not only strings are private by default: "Dynamic strings, collections, and objects are assumed to be private."
 
-Update (next day, Oct 23 2024): Another thing I haven't looked much into is exporting logs from inside the app. 
+Update (next day, Oct 23 2024): 
+
+Another thing I haven't looked much into is exporting logs from inside the app. 
 If we use the unified system log we could
 - Use `sudo sysdiagnose -u` programmatically - but it would require the user to enter the admin password and would take a few minutes.
 - Use OSLogStore API [13], but it only seems to be able to retrieve logs from the current process unless you're on macOS 12.0 or later where there's an option to retrieve the entire system log.
 - Use the `log collect` or `log show` command line tool [7]  programmatically. It should be able to the same things as `OSLogStore` but it's perhaps more powerful. It doesn't even require `sudo` IIRC.
 - -> If we can retrieve the system log using the `log` clt or `OSLogStore`, then we could just also programmatically gather crash reports from the library and that should be all the debug info we need. The other stuff inside a full sysdiagnose archive doesn't seem too useful (but I haven't thought about this much, so maybe it's better to heir on the side of collecting more information - which sysdiagnose would do? ... sysdiagnose also collects the attached USB Devices, which might be useful? so we can see what mouse the user is using ... but the user could also just tell us or we could gather that info separately inside MMF through IOKit...). However, I heard a few times that Apple encourages collecting sysdiagnose reports because, if it turns out to be a bug on Apple's side you can just send them the sysdiagnose and they'll have all the info to debug things.
+
+Alsooo, we might want to think about the problem in terms of **things we could optimize for**
+
+Basically, there are 3 things we wanna optimize the bug-reporting-process for:
+
+1. Optimize to receive maximally detailed information (If we fully optimize for this, that would see us being able to enable verbose logs for arbitrary external processes like `launchctl` and then use `sysdiagnose` to extract all diagnostic info the system can provide.)
+2. Optimize for the easiest possible user experience (If we fully optimize for that, we would probably have a simple toggle in the app to enable verbose logging, which would create a menu-bar-item with a "The bug just occured! Send the Info..." button, which would handle everything automatically - so the user might just have to click 3 or 4 UI items (measured without the reproduction of the issue) to complete the entire process. 
+3. Optimize for development time and stability (If we fully optimize for this we would just do nothing, since that's the least bug-prone and time-consuming option.)
+
+Now we could try to find the optimal balance between these 3 optimization points. But we could also do a sort of 'hybrid approach' or 'gradual approach'. 
+For example, perhaps we could have a UX-optimized process be the default. And for cases where that doesn't provide enough information, we can implement a second information-optimized approach. Or we could roll out the information-optimized approach first (since that should also be relatively easy to implement) and then roll out a UX-optimized approach if we find that we still don't get enough actionable feedback.
+
+Or we could try to find a good compromise between the 3 optimization-points and then adjust it based on how it's working.
+
+... I'd have to think about this some more.
 
 # Sources
 
