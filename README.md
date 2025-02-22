@@ -266,3 +266,32 @@ Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.
   - I used `log config` to check the `log` logLevels:
     `sudo log config --status --subsystem com.nuebling.mac-mouse-fix`
 
+Then we can upload the debug build (e.g. to MegaUpload) and send the user an email containing instructions on how to gather diagnostics using the debug build. Here's an [example email](message:<A184CC1B-1128-4F49-BBB4-A4939504E2FE@gmail.com>):
+
+```
+Hello <redacted>,
+
+Thanks for the details, and for being willing to help debug this! 
+I've created a special debug version of the app. What's special about it, is that it creates very detailed logs about everything it's doing. This will help track down what's happening when the scrolling issue occurs.
+
+Here's what to do:
+
+1. Install, and enable the special debug build, which you can download here.
+2. When the scrolling issue occurs:
+	- Immediately take a screenshot (Shift-Command-3) – the screenshot's timestamp will help me navigate the (very numerous) logs. (Possibly millions!)
+	- Then press Control-Option-Shift-Command-Period to collect the recorded logs and other system diagnostics (This is called sysdiagnose)
+       	- The screen will flash white to indicate that the sysdiagnose has started.
+3. When the sysdiagnose is done (might take a few minutes), the resulting sysdiagnose file will be revealed in Finder. It will be placed in the /var/tmp/ folder.
+4. Please send both the screenshot and the sysdiagnose files to me.
+5. To stop detailed logs from being created (Which might take up unnecessary CPU resources and disk space), simply go back to using a regular release of Mac Mouse Fix instead of the special debug build I've sent you.
+
+About Privacy:
+The sysdiagnose file contains very detailed information about your system and the activity of the software that has been running on it recently. Personal information is normally stripped from a sysdiagnose file, but I'm not sure if some personal info could slip through if software developers make a mistake. (I assume that can happen, but I haven't looked super deeply into this). In any case, I will not share your sysdiagnose file with anyone else without your express permission. If you're not comfortable with this, I also understand that of course!
+
+If you do decide to send the sysdiagnose file and the screenshot, that will help me understand exactly what's happening on your system, when scrolling stops working.
+
+Thanks again for your help!
+
+Best
+Noah
+```
