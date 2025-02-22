@@ -279,7 +279,11 @@ Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.
   - I used `log show` to see all the (persisted?) logs since the last boot:
     `log show --debug --info --last boot --predicate 'subsystem == "com.nuebling.mac-mouse-fix"'`
 
-## 2. Send the debug build
+## 2. Export and Test
+
+After archiving and exporting the new debug build, perhaps verify that logs appear in the `log show` command (see above) before distributing.
+
+## 3. Send
 
 First we can upload the debug build (e.g. to MegaUpload), and then we send the user an email, containing a download link and instructions on how to gather diagnostics. 
 
