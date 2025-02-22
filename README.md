@@ -276,7 +276,7 @@ I've created a special debug version of the app. What's special about it, is tha
 
 Here's what to do:
 
-1. Install, and enable the special debug build, which you can download here.
+1. Install, and enable the special debug build, which you can download <fill in link>.
 2. When the scrolling issue occurs:
 	- Immediately take a screenshot (Shift-Command-3) – the screenshot's timestamp will help me navigate the (very numerous) logs. (Possibly millions!)
 	- Then press Control-Option-Shift-Command-Period to collect the recorded logs and other system diagnostics (This is called sysdiagnose)
