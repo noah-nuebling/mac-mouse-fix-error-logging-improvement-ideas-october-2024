@@ -255,6 +255,7 @@ Notes:
   - We're enabling and persisting all logs to disk
   - We strip 'private' data. (Not sure about this. But it's better to strip 'private' data if we don't need it for debugging I guess.)
   - We disable all performance analytics (signpost)
+- Maybe add (Debug) to the Version String so you can more easily differentate the debug version. E.g. `3.0.4 Beta 1 (Debug)`
 
 Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.4 Beta 1)]
  - Add the `OSLogPreferences` dict both for mainApp and helperApp Info.plist's – Otherwise it doesn't seem to work for both apps. 
