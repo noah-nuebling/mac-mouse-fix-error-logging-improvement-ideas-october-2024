@@ -220,7 +220,13 @@ We do that by creating and distributing special 'debug builds' that produce and 
 
 E.g. `3.0.4 Beta 1 (Debug)`
 
-### 1.3) Add this dict to Info.plist under the `OSLogPreferences` key.
+### 1.3) Remove the NDEBUG flags
+
+From the Swift `SWIFT_ACTIVE_COMPILATION_CONDITIONS` and the C `GCC_PREPROCESSOR_DEFINITIONS`.
+
+-> That way debug asserts get enabled.
+
+### 1.4) Add this dict to Info.plist under the `OSLogPreferences` key.
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
