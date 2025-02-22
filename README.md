@@ -281,7 +281,8 @@ Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.
 
 ## 2. Export and Test
 
-After archiving and exporting the new debug build, perhaps verify that logs appear in the `log show` command (see above) before distributing.
+- Archive and export the new debug build
+- Perhaps verify that logs appear in the `log show` command (see above) before distributing.
 
 ## 3. Distribute
 
