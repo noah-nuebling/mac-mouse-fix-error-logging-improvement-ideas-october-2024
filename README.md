@@ -204,7 +204,7 @@ Or we could try to find a good compromise between the 3 optimization-points and 
 
 ---
 
-# Update [Feb 2025]
+# Update [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.4 Beta 1)]
 
 While we haven't implemented this, yet, we're using some of the learnings to debug hard-to-reproduce bugs in the short-term.
 
