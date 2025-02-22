@@ -254,7 +254,7 @@ Notes:
 
 Testing Notes [Feb 2025]
  - Add the `OSLogPreferences` dict both for mainApp and helperApp Info.plist's – Otherwise it doesn't seem to work for both apps. 
- - When you check the logLevel using the `log` clt, the Info.plist doesn't seem to affect that – however, the Info.plist dict logLevels still seem to apply in practice when checking `log show`.
+ - When you check the logLevel using `log config --status`, the Info.plist doesn't seem to affect that – however, the Info.plist dict logLevels still seem to apply in practice when checking `log show`.
 - Commands:
   - I used this Terminal command to see all the (persisted?) logs since the last boot:
     `log show --debug --info --last boot --predicate 'subsystem == "com.nuebling.mac-mouse-fix"'`
