@@ -206,19 +206,21 @@ Or we could try to find a good compromise between the 3 optimization-points and 
 
 # Update [Feb 2025] 
 
-While we haven't implemented this, yet, we're using some of the learnings to debug hard-to-reproduce bugs in the short-term.
+While we haven't implemented a better debugging system, yet, we're using some of the learnings from above to debug hard-to-reproduce bugs in the short-term.
+
+We do that by creating and distributing special 'debug builds' that produce and store verbose logs.
 
 ## 1. Create a 'verbose-debug-logging' build of the app
 
-### a) Set the DDLogLevel 
+### 1.1) Set the DDLogLevel 
 
 -> to DDLogLevelAll / .all (for both Swift and objc)
 
-### b) Maybe add (Debug) to the Version String so you can more easily differentate the debug version.
+### 1.2) Maybe add (Debug) to the Version String so you can more easily differentate the debug version.
 
 E.g. `3.0.4 Beta 1 (Debug)`
 
-### c) Add this dict to Info.plist under the `OSLogPreferences` key.
+### 1.3) Add this dict to Info.plist under the `OSLogPreferences` key.
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -275,7 +277,7 @@ Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.
 
 First we can upload the debug build (e.g. to MegaUpload), and then we send the user an email, containing a download link and instructions on how to gather diagnostics. 
 
-Here's an [example email](message:<A184CC1B-1128-4F49-BBB4-A4939504E2FE@gmail.com>):
+Here's an example email (message:<A184CC1B-1128-4F49-BBB4-A4939504E2FE@gmail.com>)
 ```
 Hello <redacted>,
 
