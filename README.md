@@ -251,6 +251,10 @@ Notes:
 - This assumes that all logs from mainApp and helperApp are using the `com.nuebling.mac-mouse-fix` subsystem.
   - -> Make sure to use that subsystem when setting up the DDOSLogger.
 - You can simply copy-paste this into the Info.plist in Xcode.
+- This `OSLogPreferences` dict is 'fully specified' with all the options visible at `man 5 os_log` as of [Feb 2025]
+  - We're enabling and persisting all logs to disk
+  - We strip 'private' data. (Not sure about this. But it's better to strip 'private' data if we don't need it for debugging.)
+  - We disable performance analytics (signpost)
 
 Testing Notes [Feb 2025]
  - Add the `OSLogPreferences` dict both for mainApp and helperApp Info.plist's – Otherwise it doesn't seem to work for both apps. 
