@@ -216,9 +216,11 @@ We do that by creating and distributing special 'debug builds' that produce and 
 
 -> to DDLogLevelAll / .all (for both Swift and objc)
 
-### 1.2) Maybe add (Debug) to the Version String so you can more easily differentate the debug version.
+### 1.2) Maybe add (Debug) to the Version String
 
-E.g. `3.0.4 Beta 1 (Debug)`
+- ... So you can more easily differentate the debug version.
+- Also helps users not accidentally keep using the debug build long-term.
+- E.g. `3.0.4 Beta 1 (Debug)`
 
 ### 1.3) Remove the NDEBUG flags
 
