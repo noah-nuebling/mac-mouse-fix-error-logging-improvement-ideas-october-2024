@@ -225,6 +225,7 @@ E.g. `3.0.4 Beta 1 (Debug)`
 From the Swift `SWIFT_ACTIVE_COMPILATION_CONDITIONS` and the C `GCC_PREPROCESSOR_DEFINITIONS`.
 
 -> That way assert() calls get enabled.
+	(Actually, isn't it better to not have assert() crash the app so it behaves exactly like a non-'verbose-debug-logging' build?)
 
 ### 1.4) Add this dict to Info.plist under the `OSLogPreferences` key.
 ```
