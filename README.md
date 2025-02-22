@@ -211,8 +211,9 @@ While we haven't implemented this, yet, we're using some of the learnings to deb
 To create a 'verbose-debug-logging' build of the app:
 
 **1. Set the DDLogLevel to DDLogLevelAll / .all (for both Swift and objc)**
-
-**2. Add this dict to Info.plist under the `OSLogPreferences` key.**
+**2. Maybe add (Debug) to the Version String so you can more easily differentate the debug version. **
+	E.g. `3.0.4 Beta 1 (Debug)`
+**3. Add this dict to Info.plist under the `OSLogPreferences` key.**
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -250,24 +251,27 @@ To create a 'verbose-debug-logging' build of the app:
 Notes:
 - This assumes that all logs from mainApp and helperApp are using the `com.nuebling.mac-mouse-fix` subsystem.
   - -> Make sure to use that subsystem when setting up the DDOSLogger.
-- You can simply copy-paste this into the Info.plist in Xcode.
+- You can simply copy-paste this into an Info.plist in the Xcode project editor!
 - This `OSLogPreferences` dict is 'fully specified' with all the options visible at `man 5 os_log` as of [Feb 2025]
   - We're enabling and persisting all logs to disk
   - We strip 'private' data. (Not sure about this. But it's better to strip 'private' data if we don't need it for debugging I guess.)
   - We disable all performance analytics (signpost)
-- Maybe add (Debug) to the Version String so you can more easily differentate the debug version. E.g. `3.0.4 Beta 1 (Debug)`
 
 Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.4 Beta 1)]
  - Add the `OSLogPreferences` dict both for mainApp and helperApp Info.plist's – Otherwise it doesn't seem to work for both apps. 
  - When you check the logLevel using `log config --status`, it doesn't seem to be affected by Info.plist – however, the Info.plist dict logLevels still seem to apply in practice when checking `log show`.
 - Commands:
+  - I used `log config` to check the 'official' (?) logLevels:
+    `sudo log config --status --subsystem com.nuebling.mac-mouse-fix`
   - I used `log show` to see all the (persisted?) logs since the last boot:
     `log show --debug --info --last boot --predicate 'subsystem == "com.nuebling.mac-mouse-fix"'`
-  - I used `log config` to check the `log` logLevels:
-    `sudo log config --status --subsystem com.nuebling.mac-mouse-fix`
 
-Then we can upload the debug build (e.g. to MegaUpload) and send the user an email containing a download link and instructions on how to gather diagnostics. Here's an [example email](message:<A184CC1B-1128-4F49-BBB4-A4939504E2FE@gmail.com>):
+**4. Then, we can upload the debug build (e.g. to MegaUpload)**
+**5. Finally, we send the user an email**
 
+-> Containing a download link and instructions on how to gather diagnostics. 
+
+Here's an [example email](message:<A184CC1B-1128-4F49-BBB4-A4939504E2FE@gmail.com>):
 ```
 Hello <redacted>,
 
