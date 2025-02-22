@@ -282,9 +282,13 @@ Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.
 
 ## 2. Export and Test
 
-- Archive and export the new debug build
+- Archive and export the new debug build – Use the 'Release' configuration with optimizations enabled, so app doesn't run slow, (and cause we don't gotta attach a debugger.)
 - Perhaps verify that verbose logs appear in the `log show` command (see above) before distributing.
   - Afaik, even at low log levels, high-level logs (like debug and info) are still persisted and possibly show up in `log show`, if they are followed by an error or fault log. Keep that in mind. Wrote more about this somewhere above.
+
+Other:
+- Afterwards, simply `git stash`. Don't think we need these debug builds in our git history.
+- dsym file for symbolication should be available in Xcode organizer for the forseeable future.
 
 ## 3. Distribute
 
