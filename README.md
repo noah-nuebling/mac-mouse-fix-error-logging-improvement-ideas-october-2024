@@ -208,17 +208,17 @@ Or we could try to find a good compromise between the 3 optimization-points and 
 
 While we haven't implemented this, yet, we're using some of the learnings to debug hard-to-reproduce bugs in the short-term.
 
-To create a 'verbose-debug-logging' build of the app:
+## 1. Create a 'verbose-debug-logging' build of the app
 
-### 1. Set the DDLogLevel 
+### a) Set the DDLogLevel 
 
 -> to DDLogLevelAll / .all (for both Swift and objc)
 
-### **2. Maybe add (Debug) to the Version String so you can more easily differentate the debug version.**
+### b) Maybe add (Debug) to the Version String so you can more easily differentate the debug version.
 
 E.g. `3.0.4 Beta 1 (Debug)`
 
-### **3. Add this dict to Info.plist under the `OSLogPreferences` key.**
+### c) Add this dict to Info.plist under the `OSLogPreferences` key.
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -271,11 +271,9 @@ Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.
   - I used `log show` to see all the (persisted?) logs since the last boot:
     `log show --debug --info --last boot --predicate 'subsystem == "com.nuebling.mac-mouse-fix"'`
 
-### **4. Then, we can upload the debug build (e.g. to MegaUpload)**
+## 2. Send the debug build
 
-### **5. Finally, we send the user an email**
-
--> Containing a download link and instructions on how to gather diagnostics. 
+First we can upload the debug build (e.g. to MegaUpload), and then we send the user an email, containing a download link and instructions on how to gather diagnostics. 
 
 Here's an [example email](message:<A184CC1B-1128-4F49-BBB4-A4939504E2FE@gmail.com>):
 ```
