@@ -264,3 +264,4 @@ Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.
     `log show --debug --info --last boot --predicate 'subsystem == "com.nuebling.mac-mouse-fix"'`
   - I used `log config` to check the `log` logLevels:
     `sudo log config --status --subsystem com.nuebling.mac-mouse-fix`
+
