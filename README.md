@@ -200,3 +200,62 @@ Or we could try to find a good compromise between the 3 optimization-points and 
 - [11] `sysdiagnose` privacy message. Afaik, this shows up when running the command for the first time or when running it with the `-F` argument.
 - [12] CocoaLumberJack Discussion "Should everyone migrate to OSLog"? https://github.com/CocoaLumberjack/CocoaLumberjack/discussions/1363
 - [13] OSLogStore Documentation https://developer.apple.com/documentation/oslog/oslogstore?language=objc
+
+
+---
+
+# Update [Feb 2025]
+
+While we haven't implemented this, yet, we're using some of the learnings to debug hard-to-reproduce bugs in the short-term.
+
+To create a 'verbose-debug-logging' build of the app:
+
+**1. Set the DDLogLevel to DDLogLevelAll / .all (for both Swift and objc)**
+
+**2. Add this dict to Info.plist under the `OSLogPreferences` key.**
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com.nuebling.mac-mouse-fix</key>
+	<dict>
+		<key>DEFAULT-OPTIONS</key>
+		<dict>
+			<key>Signpost-Enabled</key>
+			<false/>
+			<key>Enable-Private-Data</key>
+			<false/>
+			<key>Signpost-Scope</key>
+			<string>Process</string>
+			<key>Enable-Oversize-Messages</key>
+			<true/>
+			<key>Signpost-Persisted</key>
+			<false/>
+			<key>Level</key>
+			<dict>
+				<key>Persist</key>
+				<string>Debug</string>
+				<key>Enable</key>
+				<string>Debug</string>
+			</dict>
+			<key>Signpost-Backtraces-Enabled</key>
+			<false/>
+		</dict>
+	</dict>
+</dict>
+</plist>
+
+```
+Notes:
+- This assumes that all logs from mainApp and helperApp are using the `com.nuebling.mac-mouse-fix` subsystem.
+  - -> Make sure to use that subsystem when setting up the DDOSLogger.
+
+Testing Notes [Feb 2025]
+ - Add the `OSLogPreferences` dict both for mainApp and helperApp Info.plist's – Otherwise it doesn't seem to work for both apps. 
+ - When you check the logLevel using the `log` clt, the Info.plist doesn't seem to affect that – however, the Info.plist dict logLevels still seem to apply in practice when checking `log show`.
+- Commands:
+  - I used this Terminal command to see all the (persisted?) logs since the last boot:
+    `log show --debug --info --last boot --predicate 'subsystem == "com.nuebling.mac-mouse-fix"'`
+  - I used this command to check the `log` logLevels:
+    `sudo log config --status --subsystem com.nuebling.mac-mouse-fix`
