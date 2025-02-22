@@ -283,7 +283,7 @@ Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.
 
 - Archive and export the new debug build
 - Perhaps verify that verbose logs appear in the `log show` command (see above) before distributing.
-  - Afaik low-level logs are still persistet and possibly show up here if they are followed by an Error or Fault log. Keep that in mind. Wrote more about this somewhere above.
+  - Afaik, even at low log levels, high-level logs (like debug and info) are still persisted and possibly show up in `log show`, if they are followed by an error or fault log. Keep that in mind. Wrote more about this somewhere above.
 
 ## 3. Distribute
 
