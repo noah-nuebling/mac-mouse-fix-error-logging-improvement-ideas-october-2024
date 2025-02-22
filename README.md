@@ -283,9 +283,11 @@ Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.
 
 After archiving and exporting the new debug build, perhaps verify that logs appear in the `log show` command (see above) before distributing.
 
-## 3. Send
+## 3. Distribute
 
 First we can upload the debug build (e.g. to MegaUpload), and then we send the user an email, containing a download link and instructions on how to gather diagnostics. 
+
+(We need MegaUpload or similar, because Gmail doesn't allow attaching .app files – not even when zipped – due to security reasons.)
 
 Here's an example email (`message:<A184CC1B-1128-4F49-BBB4-A4939504E2FE@gmail.com>`)
 ```
