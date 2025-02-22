@@ -204,7 +204,7 @@ Or we could try to find a good compromise between the 3 optimization-points and 
 
 ---
 
-# Update [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.4 Beta 1)]
+# Update [Feb 2025] 
 
 While we haven't implemented this, yet, we're using some of the learnings to debug hard-to-reproduce bugs in the short-term.
 
@@ -253,14 +253,14 @@ Notes:
 - You can simply copy-paste this into the Info.plist in Xcode.
 - This `OSLogPreferences` dict is 'fully specified' with all the options visible at `man 5 os_log` as of [Feb 2025]
   - We're enabling and persisting all logs to disk
-  - We strip 'private' data. (Not sure about this. But it's better to strip 'private' data if we don't need it for debugging.)
-  - We disable performance analytics (signpost)
+  - We strip 'private' data. (Not sure about this. But it's better to strip 'private' data if we don't need it for debugging I guess.)
+  - We disable all performance analytics (signpost)
 
-Testing Notes [Feb 2025]
+Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.4 Beta 1)]
  - Add the `OSLogPreferences` dict both for mainApp and helperApp Info.plist's – Otherwise it doesn't seem to work for both apps. 
- - When you check the logLevel using `log config --status`, the Info.plist doesn't seem to affect that – however, the Info.plist dict logLevels still seem to apply in practice when checking `log show`.
+ - When you check the logLevel using `log config --status`, it doesn't seem to be affected by Info.plist – however, the Info.plist dict logLevels still seem to apply in practice when checking `log show`.
 - Commands:
-  - I used this Terminal command to see all the (persisted?) logs since the last boot:
+  - I used `log show` to see all the (persisted?) logs since the last boot:
     `log show --debug --info --last boot --predicate 'subsystem == "com.nuebling.mac-mouse-fix"'`
-  - I used this command to check the `log` logLevels:
+  - I used `log config` to check the `log` logLevels:
     `sudo log config --status --subsystem com.nuebling.mac-mouse-fix`
