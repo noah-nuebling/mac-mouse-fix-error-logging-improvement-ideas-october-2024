@@ -268,6 +268,7 @@ Notes:
 - This `OSLogPreferences` dict is 'fully specified' with all the options visible at `man 5 os_log` as of [Feb 2025]
   - We're enabling and persisting all logs to disk
   - We strip 'private' data. (Not sure about this. But it's better to strip 'private' data if we don't need it for debugging I guess.)
+  - We enable 'Oversize' messages. (Not sure about this, but we don't want long logs to be cut off, I guess?)
   - We disable all performance analytics (signpost)
 
 Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.4 Beta 1)]
