@@ -250,6 +250,7 @@ To create a 'verbose-debug-logging' build of the app:
 Notes:
 - This assumes that all logs from mainApp and helperApp are using the `com.nuebling.mac-mouse-fix` subsystem.
   - -> Make sure to use that subsystem when setting up the DDOSLogger.
+- You can simply copy-paste this into the Info.plist in Xcode.
 
 Testing Notes [Feb 2025]
  - Add the `OSLogPreferences` dict both for mainApp and helperApp Info.plist's – Otherwise it doesn't seem to work for both apps. 
