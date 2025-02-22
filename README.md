@@ -266,7 +266,7 @@ Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.
   - I used `log config` to check the `log` logLevels:
     `sudo log config --status --subsystem com.nuebling.mac-mouse-fix`
 
-Then we can upload the debug build (e.g. to MegaUpload) and send the user an email containing instructions on how to gather diagnostics using the debug build. Here's an [example email](message:<A184CC1B-1128-4F49-BBB4-A4939504E2FE@gmail.com>):
+Then we can upload the debug build (e.g. to MegaUpload) and send the user an email containing a download link and instructions on how to gather diagnostics. Here's an [example email](message:<A184CC1B-1128-4F49-BBB4-A4939504E2FE@gmail.com>):
 
 ```
 Hello <redacted>,
