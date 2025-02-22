@@ -204,7 +204,7 @@ Or we could try to find a good compromise between the 3 optimization-points and 
 
 ---
 
-# Update [Feb 2025] 
+# Update [Feb 2025] - Short Term Solution
 
 While we haven't implemented a better debugging system, yet, we're using some of the learnings from above to debug hard-to-reproduce bugs in the short-term.
 
@@ -282,7 +282,8 @@ Testing Notes [Feb 2025] [macOS 15.3 (24D60)] [MMF build 23676 (right after 3.0.
 ## 2. Export and Test
 
 - Archive and export the new debug build
-- Perhaps verify that logs appear in the `log show` command (see above) before distributing.
+- Perhaps verify that verbose logs appear in the `log show` command (see above) before distributing.
+  - Afaik low-level logs are still persistet and possibly show up here if they are followed by an Error or Fault log. Keep that in mind. Wrote more about this somewhere above.
 
 ## 3. Distribute
 
