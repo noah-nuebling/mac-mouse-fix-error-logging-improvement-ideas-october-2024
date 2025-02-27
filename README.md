@@ -327,3 +327,39 @@ Thanks again for your help!
 Best
 Noah
 ```
+
+Here's a later example message we posted as a [GitHub comment](https://github.com/noah-nuebling/mac-mouse-fix/issues/1299#issuecomment-2687638866):
+```
+Hey @jzetterman, thanks for the quick reply.
+
+After thinking about this more carefully, I don't think it would be caused by conflicts with other software. The behavior you're describing (Settings temporarily reverting to default, but then automatically going back to your custom settings) is quite unusual.
+
+First some quick questions:
+1. How frequently does this happen? Every sleep/wake cycle, or just sometimes?
+2. Do you notice any pattern to when it occurs?
+
+I've tried to reproduce this with my MX Master 2S connected via Bluetooth, and sleep/wake cycles – but I couldn't reproduce the bug. Therefore, it's hard to figure out what's going on. 
+
+If you'd like, you can help investigate this further:
+
+I've created a special debug version of the app. What's special about it, is that it creates very detailed logs about everything it's doing. This will help track down what's happening when the issue occurs.
+
+Here's what to do:
+
+1. Install, and enable the special debug build, which you can [download here](https://mega.nz/file/W5pnCbJJ#dg4kIAwQ1nsdmw9xzJODkaRXW7aQkrei6C6-2Gc0Wnc).
+2. When the issue occurs, and you notice that the settings have reverted:
+    - Immediately take a screenshot (Shift-Command-3) – the screenshot's timestamp will help me navigate the (very numerous) logs. (Possibly millions!)
+    - Then press Control-Option-Shift-Command-Period to collect the recorded logs and other system diagnostics (This is called sysdiagnose)
+    - The screen will flash white to indicate that the sysdiagnose has started.
+3. When the sysdiagnose is done (might take a few minutes), the resulting sysdiagnose file will be revealed in Finder. It will be placed in the /var/tmp/ folder.
+4. Please send both the screenshot and the sysdiagnose files to me.
+    - You should probably send them via [email](http://redirect.macmousefix.com/?target=mailto-noah), not via GitHub. That's because the sysdiagnose file might contain personal data. See the 'About Privacy' section below.
+5. To stop detailed logs from being created (Which might take up unnecessary CPU resources and disk space), simply go back to using a regular release of Mac Mouse Fix instead of the special debug build I've linked here.
+
+About Privacy:
+The sysdiagnose file contains very detailed information about your system and the activity of the software that has been running on it recently. Personal information is normally stripped from a sysdiagnose file, but I'm not sure if some personal info could slip through if software developers make a mistake. (I assume that can happen, but I haven't looked super deeply into this). In any case, I will not share your sysdiagnose file with anyone else without your express permission. If you're not comfortable with this, I also understand that of course!
+
+If you do decide to send the sysdiagnose file and the screenshot, that will help me understand exactly what's happening on your system, when the bug occurs.
+
+Thank you for your help!
+```
