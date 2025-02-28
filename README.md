@@ -363,3 +363,5 @@ If you do decide to send the sysdiagnose file and the screenshot, that will help
 
 Thank you for your help!
 ```
+
+Perhaps we could also link users to Apple's PDF documents with sysdiagnose instructions which can be found at their profiles-and-logs page [10]
