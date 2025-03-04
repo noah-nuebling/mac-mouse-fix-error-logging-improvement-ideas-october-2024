@@ -313,7 +313,7 @@ Here's what to do:
 	- Immediately take a screenshot (Shift-Command-3) – the screenshot's timestamp will help me navigate the (very numerous) logs. (Possibly millions!)
 	- Then press Control-Option-Shift-Command-Period to collect the recorded logs and other system diagnostics (This is called sysdiagnose)
        	- The screen will flash white to indicate that the sysdiagnose has started.
-3. When the sysdiagnose is done (might take a few minutes), the resulting sysdiagnose file will be revealed in Finder. It will be placed in the /var/tmp/ folder.
+3. When the sysdiagnose is done (might take a few minutes), the resulting sysdiagnose file will be revealed in Finder. It will be placed in the /private/var/tmp/ folder.
 4. Please send both the screenshot and the sysdiagnose files to me.
 5. To stop detailed logs from being created (Which might take up unnecessary CPU resources and disk space), simply go back to using a regular release of Mac Mouse Fix instead of the special debug build I've sent you.
 
@@ -351,7 +351,7 @@ Here's what to do:
     - Immediately take a screenshot (Shift-Command-3) – the screenshot's timestamp will help me navigate the (very numerous) logs.
     - Then press Control-Option-Shift-Command-Period to collect the recorded logs and other system diagnostics (This is called sysdiagnose)
     - The screen will flash white to indicate that the sysdiagnose has started.
-3. When the sysdiagnose is done (might take a few minutes), the resulting sysdiagnose file will be revealed in Finder. It will be placed in the /var/tmp/ folder.
+3. When the sysdiagnose is done (might take a few minutes), the resulting sysdiagnose file will be revealed in Finder. It will be placed in the /private/var/tmp/ folder.
 4. Please send both the screenshot and the sysdiagnose files to me.
     - You should probably [send them via email](http://redirect.macmousefix.com/?target=mailto-noah), not via GitHub. That's because the sysdiagnose file might contain personal data. See the 'About Privacy' section below.
 5. To stop detailed logs from being created (Which might take up unnecessary CPU resources and disk space), simply go back to using a regular release of Mac Mouse Fix instead of the special debug build I've linked here.
