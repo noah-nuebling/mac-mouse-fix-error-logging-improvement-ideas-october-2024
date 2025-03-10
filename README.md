@@ -299,45 +299,76 @@ First we can upload the debug build (e.g. to MegaUpload), and then we send the u
 
 (We need MegaUpload or similar, because Gmail doesn't allow attaching .app files – not even when zipped – due to security reasons.)
 
-Here's an example email (`message:<A184CC1B-1128-4F49-BBB4-A4939504E2FE@gmail.com>`)
-
-Here's a later example message we posted as a [GitHub comment](https://github.com/noah-nuebling/mac-mouse-fix/issues/1299#issuecomment-2687638866):
+Examples: (Chronological – use the last ones as reference)
+- Email: (`message:<A184CC1B-1128-4F49-BBB4-A4939504E2FE@gmail.com>`)
+- [GitHub comment](https://github.com/noah-nuebling/mac-mouse-fix/issues/1299#issuecomment-2687638866):
+- Email: `message:<7AB8A438-1107-4913-9AB6-B3E8999B9762@gmail.com>`
 
 Here's a template:
+
 ```
-Hey @jzetterman, thanks for the quick reply.
-
-After thinking about this more carefully, I don't think it would be caused by conflicts with other software. The behavior you're describing (Settings temporarily reverting to default, but then automatically going back to your custom settings) is quite unusual.
-
-First some quick questions:
-1. How frequently does this happen? Every sleep/wake cycle, or just sometimes?
-2. Do you notice any pattern to when it occurs?
-
-I've tried to reproduce this with my MX Master 2S connected via Bluetooth, and sleep/wake cycles – but I couldn't reproduce the bug. Therefore, it's hard to figure out what's going on. 
-
-If you'd like, you can help investigate this further:
+<FILL IN BEGINNING>
 
 I've created a special debug version of the app. What's special about it, is that it creates very detailed logs about everything it's doing. This will help track down what's happening when the issue occurs.
 
 Here's what to do:
 
-1. Install, and enable the special debug build, which you can [download here](https://mega.nz/file/W5pnCbJJ#dg4kIAwQ1nsdmw9xzJODkaRXW7aQkrei6C6-2Gc0Wnc).
-2. Keep using your computer as normal, then, when the <scrolling> issue occurs:
-    1. Immediately take a screenshot (Shift-Command-3) – the screenshot's timestamp will help me navigate the (very numerous) logs.
-    2. <If applicable: Further steps for accruing logs, e.g. keep playing around with the broken feature for a few seconds, then do the workaround steps.>
-    3. Then press Shift-Control-Option-Command-Period to collect the recorded logs and other system diagnostics (This is called sysdiagnose)
-    4. The screen will flash white to indicate that the sysdiagnose has started.
-3. When the sysdiagnose is done (might take a few minutes), the resulting sysdiagnose file will be revealed in Finder. It will be placed in the /private/var/tmp/ folder.
-4. Please send both the screenshot and the sysdiagnose files to me.
-    - You should probably [send them via email](http://redirect.macmousefix.com/?target=mailto-noah), not via GitHub. That's because the sysdiagnose file might contain personal data. See the 'About Privacy' section below.
-5. To stop detailed logs from being created (Which might take up unnecessary CPU resources and disk space), simply go back to using a regular release of Mac Mouse Fix instead of the special debug build I've linked here.
+1. Install, and enable the special debug build of Mac Mouse Fix
+    - Download link: <FILL IN LINK>
 
-About Privacy:
-The sysdiagnose file contains very detailed information about your system and the activity of the software that has been running on it recently. Personal information is normally stripped from a sysdiagnose file, but I'm not sure if some personal info could slip through if software developers make a mistake. (I assume that can happen, but I haven't looked super deeply into this). In any case, I will not share your sysdiagnose file with anyone else without your express permission. If you're not comfortable with this, I also understand that of course!
+2. When the issue occurs:
+    a) Take a **screenshot** (Shift-Command-3) to record the current time.
+    b) Document the problem in the logs
+        - <FILL IN STEPS>
+    c) Collect the logs in a **sysdiagnose** file
+        - Press Shift-Control-Option-Command-Period
+        - The screen will flash white to show the sysdiagnose process has started.
+        - Wait a bit (up to 10 minutes) for completion.
+        - Once complete, the file will appear in Finder at `/private/var/tmp/sysdiagnose_[...].tar.gz`
 
-If you do decide to send the sysdiagnose file and the screenshot, that will help me understand exactly what's happening on your system, when the bug occurs.
+3. Send me the files:
+    - Please upload both the **screenshot** and the **sysdiagnose** file to this link: <FILL IN LINK>
+    - (You can also send them another way, but the sysdiagnose file is typically too large for email.)
 
-Thank you for your help!
+4. Disable logging
+    - After sending the files, you can switch back to a regular release of Mac Mouse Fix to stop the detailed logging (which uses extra CPU and disk space).
+
+Privacy Note:
+The sysdiagnose file contains detailed information about your system.
+Personal information is normally removed, but I think some might remain if there are certain bugs in the software on your system.
+I will not share your sysdiagnose file with anyone without your permission.
+
+<FILL IN ENDING>
 ```
 
 Perhaps we could also link users to Apple's PDF documents with sysdiagnose instructions which can be found at their profiles-and-logs page [10]
+
+### How can the user share the large sysdiagnose file?
+
+- Apple Maildrop
+    - Easy option for Apple Mail users.
+    - Files expire after 30 days.
+- swisstransfer.com
+    - Very simple & easy interface
+    - Files expire after 30 days
+- wetransfer.com
+   - Pretty simple UI
+   - 7 day expiration on free plan
+   - Has 'file request' feature. Files expire after 3 days. If I buy the 20€/month ultimate plan this might increase.
+- Cloud Drives
+    - No expiration
+    - Ask the user to upload to their own Cloud drive (Google Driver, Dropbox, iCloud Drive)
+        - Requires account (but most ppl will have some Cloud Drive I think)
+        - User has to delete the file manually (annoying)
+    - Collaborative folder
+        - Requires account (I think)
+    - File request
+        - No account required
+        - **Perfect!**
+        - Mega.nz and Dropbox support this, iCloud an Google Drive don't as of [Mar 2025]
+
+The file request description could be:
+
+```
+Please upload the screenshot you took & your sysdiagnose archive (whose file extension should be .tar.gz). Thank you!
+```
