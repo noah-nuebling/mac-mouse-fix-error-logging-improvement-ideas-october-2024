@@ -367,7 +367,7 @@ Perhaps we could also link users to Apple's PDF documents with sysdiagnose instr
         - **Perfect!**
         - Mega.nz and Dropbox support this, iCloud an Google Drive don't as of [Mar 2025]
 
-The file request description could be:
+The file request description foe mega.nz could be:
 
 ```
 Please upload the screenshot you took & your sysdiagnose archive (whose file extension should be .tar.gz). Thank you!
