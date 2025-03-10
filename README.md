@@ -331,7 +331,7 @@ Here's what to do:
     - (You can also send them another way, but the sysdiagnose file is typically too large for email.)
 
 4. Disable logging
-    - After sending the files, you can switch back to a regular release of Mac Mouse Fix to stop the detailed logging (which uses extra CPU and disk space).
+    - After sending the files, you can switch back to a regular release of Mac Mouse Fix to stop the detailed logging.
 
 Privacy Note:
 The sysdiagnose file contains detailed information about your system.
