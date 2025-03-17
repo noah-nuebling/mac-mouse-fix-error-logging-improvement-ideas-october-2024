@@ -372,3 +372,22 @@ The file request description foe mega.nz could be:
 ```
 Please upload the screenshot you took & your sysdiagnose archive (whose file extension should be .tar.gz). Thank you!
 ```
+
+## Notes from investigating first sysdiagnose we've been sent (Mar 17 2025)
+
+Inspecting screenshot timestamps:
+- Bad options:
+    - Finder only has minute-precision for timestamps.
+    - `stat` clt requires complex args to get human-readable output with timezone info.
+	Couldn't find a way to get it to print sub-second precision at all.
+- Good option: `gstat <filename>`
+	- Displays all info about the timestamps in a human-readable way.
+        	- Including sub-second precision.
+   		- Including timezone info.
+        - Timstamps are in ISO 8601 format – just like the timestamps displayed for system_logs.logarchive in Console.app
+		- Reference: https://en.wikipedia.org/wiki/ISO_8601
+        	- Don't forget: Suffix `+0700` means: The timestamp is in the 'UTC + 7 hours' timezone. So to get UTC time, you have to *subtract* 7.
+- Sometimes we saw information missing from a file's timestamps:
+        - Sub-second precision: I tested with Keka: .zip, and .tar.gz stripped sub-second information, while .7z kept it. Didn't test anything else.
+  	- Timezones: Observation: `gstat` and other timestamp-viewers always converted the timestamps to my current system's timezone, even though examples outputs on the web from Linux users didn't seem to do that. I assume that's because the timestamps on my files don't contain timezone-info and are just stored in absolute time since 1970 or whatever..
+  		- -> Idk if macOS never records timezone info in file-timestamps or if this info was also stripped by the archiving. (Didn't test.)
