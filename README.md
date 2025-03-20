@@ -301,9 +301,10 @@ First we can upload the debug build (e.g. to MegaUpload), and then we send the u
 
 Examples: (Chronological – use the last ones as reference)
 - Email: (`message:<A184CC1B-1128-4F49-BBB4-A4939504E2FE@gmail.com>`)
-- [GitHub comment](https://github.com/noah-nuebling/mac-mouse-fix/issues/1299#issuecomment-2687638866):
+- [GitHub comment](https://github.com/noah-nuebling/mac-mouse-fix/issues/1299#issuecomment-2687638866)
 - Email: `message:<7AB8A438-1107-4913-9AB6-B3E8999B9762@gmail.com>`
 - Email: `message:<6DD683D8-AF06-4FC0-8D08-FF4D91E36439@gmail.com>`
+- [GitHub comment](https://github.com/noah-nuebling/mac-mouse-fix/issues/1313#issuecomment-2741564189)
 
 Here's a template:
 
