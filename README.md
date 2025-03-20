@@ -396,6 +396,7 @@ Update [Mar 20 2025]:
 		- Public mega.nz file request?
       			- Perhaps we could simply share our Mega.nz upload link publicly on GitHub and MMF Feedback Assistant?
 	 		- We could correlate uploads to reports through timestamps?.
+    				- But what if that's not good enough? –– E.g. if users upload at a much different time than they publish their bug report? Or if multiple users upload around the same time (unlikely, since we never get any logs – that's the reason we're writing this file).
     				- Investigation: Can we programmatically create file-requests to better correlate uploaded files with specific bug reports?
 					-> I investigated the MEGAcmd app and it seems it can't do that (Source: <export> command's documentation after typing `help -ff` in the repl.)
      					-> I investigated the MEGA webclient source code, but the API it uses to create a file request seems very obscure 
@@ -439,7 +440,15 @@ Update [Mar 20 2025]:
 
 The description for a *personalized* file request could be this:
 
-1. Upload the screenshot you took & your sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and include it in your bug report (or in a followup message). That way, I can correlate your files with your report || Thank you!
+```
+Please upload the screenshot you took & your sysdiagnose archive (whose file extension should be .tar.gz). Thank you!
+```
+
+
+The description for a *public* file request could be this: (3 different variants for 3 different communication channels: Feedback Assistant, Email, GH Issue.)
+```
+1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and <include it in your bug report OR send it to me via email OR post it in the GitHub Issue>. That way, I can correlate your files with your report || Thank you!
+```
 
 (mega.nz doesn't support linebreaks [Mar 2025] so we used '||' instead.)
 
