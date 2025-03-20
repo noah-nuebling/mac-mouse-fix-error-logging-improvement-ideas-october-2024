@@ -388,7 +388,7 @@ Perhaps we could also link users to Apple's PDF documents with sysdiagnose instr
 - Update [Mar 20 2025]:
 	- Concern: 
 		Ideally users should be able to upload sysdiagnose files right from the place where they file their feedback (Email to me, MMF Feedback Assistant, GitHub Issues)
-	   	  In the 'Email to me' case I can send them the Mega.nz upload link - but what about the 'MMF Feedback Assistant' and 'GitHub Issues' cases?
+	   	  In the 'Email to me' case I can send them a personalized Mega.nz upload link - but what about the 'MMF Feedback Assistant' and 'GitHub Issues' cases?
 	- Solutions approaches:
  		- Private mega.nz file request via email
    			- This means: We're manually asking users on GitHub to send us an email so we can share a *private, custom* mega.nz upload link with them.
@@ -397,11 +397,11 @@ Perhaps we could also link users to Apple's PDF documents with sysdiagnose instr
       			- Perhaps we could simply share our Mega.nz upload link publicly on GitHub and MMF Feedback Assistant?
 	 		- We could correlate uploads to reports through timestamps?.
     				- But what if that's not good enough? –– E.g. if users upload at a much different time than they publish their bug report? Or if multiple users upload around the same time (unlikely, since we never get any logs – that's the reason we're writing this file).
-    				- Investigation: Can we programmatically create file-requests to better correlate uploaded files with specific bug reports?
+    				- Investigation: Can we programmatically create mega.nz file-requests to better correlate uploaded files with specific bug reports?
 					-> I investigated the MEGAcmd app and it seems it can't do that (Source: <export> command's documentation after typing `help -ff` in the repl.)
      					-> I investigated the MEGA webclient source code, but the API it uses to create a file request seems very obscure 
 	  				   (Source: https://github.com/meganz/webclient/blob/105193c4fcb734092c7d2a07aeb7fcd63ee06f29/js/filerequest_common.js#L117)
-	  				-> If we need more programmatic control over file-requests we might have to use another service.
+	  				-> If we need more programmatic control over file-requests we might have to use another service than mega.
        					- Update: I just discovered that there are 'Upload IDs'! I think they mostly solve the problem of correlating uploads with bug reports.
 	 		- We'd just manually delete old reports if our storage fills up.
     			- If the service is abused
@@ -416,7 +416,7 @@ Perhaps we could also link users to Apple's PDF documents with sysdiagnose instr
  				- Using GitHub API it's pretty easy to upload large files as GitHub release assets (we're also using this to host localization files for our uploadstrings.py script)
    				- Problem: The GitHub 'fine grained' access tokens don't let you permit release asset *uploads* but not *downloads*. 
        					So if we wanted to run this in the user's browsers, e.g. for MMF Feedback Assistant, we couldn't keep the sysdiagnose files private.
-			- Also see: 'About large files on GitHub' (didn't read thoroughly, yet): https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github
+			- Also see: GitHub's article 'About large files on GitHub' (didn't read thoroughly, yet): https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github
 		
   		- Custom cloud upload service
 			- AWS:
@@ -446,7 +446,13 @@ Please upload the screenshot you took & your sysdiagnose archive (whose file ext
 
 The description for a *public* file request could be this: 	(3 different variants for 3 different communication channels: Feedback Assistant, Email, GH Issue.)
 ```
-1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and <include it in your bug report OR send it to me via email OR post it in the GitHub Issue>. That way, I can correlate your files with your report || Thank you!
+1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and include it in your bug report. That way, I can correlate your files with your report || Thank you!
+```
+```
+1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and send it to me via email. That way, I can correlate your files with your report || Thank you!
+```
+```
+1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and post it in the GitHub Issue. That way, I can correlate your files with your report || Thank you!
 ```
 
 (mega.nz doesn't support linebreaks [Mar 2025] so we used '||' instead.)
