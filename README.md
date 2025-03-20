@@ -1,4 +1,4 @@
- # Error Logging Improvements Ideas for Mac Mouse Fix (October 2024)
+# Error Logging Improvements Ideas for Mac Mouse Fix (October 2024)
 
 > [!NOTE]
 > This repo is just a note to jot down my ideas. Not sure why I'm creating a GitHub repo for this instead of just an Apple Note or something. I hope It's not a terrible idea to make 'Note Taking Repos'. Might be bad that we can't sort / filter them if we create a lot of different ones?
@@ -444,8 +444,7 @@ The description for a *personalized* file request could be this:
 Please upload the screenshot you took & your sysdiagnose archive (whose file extension should be .tar.gz). Thank you!
 ```
 
-
-The description for a *public* file request could be this: (3 different variants for 3 different communication channels: Feedback Assistant, Email, GH Issue.)
+The description for a *public* file request could be this: 	(3 different variants for 3 different communication channels: Feedback Assistant, Email, GH Issue.)
 ```
 1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and <include it in your bug report OR send it to me via email OR post it in the GitHub Issue>. That way, I can correlate your files with your report || Thank you!
 ```
