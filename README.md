@@ -449,10 +449,10 @@ The description for a *public* file request could be this: 	(3 different variant
 1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and include it in your bug report. That way, I can correlate your files with your report || Thank you!
 ```
 ```
-1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and send it to me via email. That way, I can correlate your files with your report || Thank you!
+1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and send it to me via email. That way, I can correlate your files with your report || Thanks!
 ```
 ```
-1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and post it in the GitHub Issue. That way, I can correlate your files with your report || Thank you!
+1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and post it in the GitHub Issue. That way, I can correlate your files with your report || Thanks very much!
 ```
 
 (mega.nz doesn't support linebreaks [Mar 2025] so we used '||' instead.)
