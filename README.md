@@ -303,6 +303,7 @@ Examples: (Chronological – use the last ones as reference)
 - Email: (`message:<A184CC1B-1128-4F49-BBB4-A4939504E2FE@gmail.com>`)
 - [GitHub comment](https://github.com/noah-nuebling/mac-mouse-fix/issues/1299#issuecomment-2687638866):
 - Email: `message:<7AB8A438-1107-4913-9AB6-B3E8999B9762@gmail.com>`
+- Email: `message:<6DD683D8-AF06-4FC0-8D08-FF4D91E36439@gmail.com>`
 
 Here's a template:
 
@@ -342,7 +343,7 @@ I will not share your sysdiagnose file with anyone without your permission.
 ```
 
 Perhaps we could also link users to Apple's PDF documents with sysdiagnose instructions which can be found at their profiles-and-logs page [10]
-
+  
 ### How can the user share the large sysdiagnose file?
 
 - Apple Maildrop
@@ -366,12 +367,81 @@ Perhaps we could also link users to Apple's PDF documents with sysdiagnose instr
         - No account required
         - **Perfect!**
         - Mega.nz and Dropbox support this, iCloud an Google Drive don't as of [Mar 2025]
+	- Providers:
+ 		- mega.nz
+     			- Overview: I love them, the service is very nice and solid, and 20 GB free storage is generous, and should be enough for our usecase.
+   			- We could match uploads to bug reports via timestamps,
+      			- Or by asking the user to attach the 'upload ID' to their report! (which is attached to the uploaded file names by mega and also shows up in the upload window for the user.)
+   		- pcloud.com
+       			- Overview: Only 3 GB free, paid prices comparable to mega. Has a lower low tier than mega – 500 GB for 5€/month, while mega starts at 10€ IIRC.
+     			- We could match uploads to bug reports via the 'name' field.
+       		- dropbox.com
+           		- Overview: Only 2 GB free, paid prices a bit higher than mega.
+         		- We could match uploads to bug reports via the 'name' and 'email' fields.
+           		- I kinda hate the interface for some reason, it's flashy but it feels so overbearing. Also, do they wanna spy on user's who enter their email for the file request? Idk I don't like it.
+             	- box.com
+                	- It's aimed a business and I really don't like it.
+                 	- Has upload-only links IIRC
+                - Proton Drive
+                	- Doesn't have a file-request feature
 
-The file request description foe mega.nz could be:
+Update [Mar 20 2025]:
+	Concern: 
+		Ideally users should be able to upload sysdiagnose files right from the place where they file their feedback (Email to me, MMF Feedback Assistant, GitHub Issues)
+	   	  In the 'Email to me' case I can send them the Mega.nz upload link - but what about the 'MMF Feedback Assistant' and 'GitHub Issues' cases?
+	Solutions approaches:
+ 		- Private mega.nz file request via email
+   			- This means: We're manually asking users on GitHub to send us an email so we can share a *private, custom* mega.nz upload link with them.
+      			- Downside: Introduces several manual extra steps for us and the user, which wastes time and lowers our chances of getting sysdiagnose reports.
+		- Public mega.nz file request?
+      			- Perhaps we could simply share our Mega.nz upload link publicly on GitHub and MMF Feedback Assistant?
+	 		- We could correlate uploads to reports through timestamps?.
+    				- Investigation: Can we programmatically create file-requests to better correlate uploaded files with specific bug reports?
+					-> I investigated the MEGAcmd app and it seems it can't do that (Source: <export> command's documentation after typing `help -ff` in the repl.)
+     					-> I investigated the MEGA webclient source code, but the API it uses to create a file request seems very obscure 
+	  				   (Source: https://github.com/meganz/webclient/blob/105193c4fcb734092c7d2a07aeb7fcd63ee06f29/js/filerequest_common.js#L117)
+	  				-> If we need more programmatic control over file-requests we might have to use another service.
+       					- Update: I just discovered that there are 'Upload IDs'! I think they mostly solve the problem of correlating uploads with bug reports.
+	 		- We'd just manually delete old reports if our storage fills up.
+    			- If the service is abused
+       				- If someone uploads tons of random stuff, our mega.nz account will probably just stop accepting uploads, and we can delete the random files to get it working again.
+	   			- If someone sends us a virus I just won't run it, since we don't expect any executable files to be sent to us.
+    			-> I feel like that might work.
+		- GitHub
+			- GitHub Issues:
+				- I thought, for commenters in GitHub Issues who aren't as concerned about privacy they might directly attach their sysdiagnose file to their GitHub Issue comment.
+        			- Problem: I just tried this with a 350 MB sysdiagnose archive from a user and it just says 'Failed to upload'. I assume there's a filesize limit. 
+			- GitHub Releases
+ 				- Using GitHub API it's pretty easy to upload large files as GitHub release assets (we're also using this to host localization files for our uploadstrings.py script)
+   				- Problem: The GitHub 'fine grained' access tokens don't let you permit release asset *uploads* but not *downloads*. 
+       					So if we wanted to run this in the user's browsers, e.g. for MMF Feedback Assistant, we couldn't keep the sysdiagnose files private.
+			- Also see: 'About large files on GitHub' (didn't read thoroughly, yet): https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github
+		
+  		- Custom cloud upload service
+			- AWS:
+	 			- is pretty hard to use.
+   				- Doesn't have good abuse protection afaik. Real chance of getting Ginormous bills if there's serious abuse.
+	     		- Vercel:
+      				- Blob storage is 250MB/month in free tier -> Too low. (Source: https://vercel.com/docs/vercel-blob/usage-and-pricing)
+        		- Netlify:
+	        		- Has free tier which simply suspends when rate limits are reached -> Built in, easy abuse protection.
+        	    		- Blobs don't cost anything currently. Their developer said, that the plan is: "Customers get 100GB for free, and additional GBs will cost 9 cents a month"
+            		  	  (Source: https://answers.netlify.com/t/blobs-pricing-and-limits/119907/2)
+					- -> Sounds totally good enough for our use case
+     			- <[Mar 2025] I'm currently not aware of other competitors to AWS, Vercel, Netlify, and I also didn't Google for any>
 
-```
-Please upload the screenshot you took & your sysdiagnose archive (whose file extension should be .tar.gz). Thank you!
-```
+	Conclusion: [Mar 2025]
+ 		- Fine solution for now: Simply sharing our mega.nz upload links publicly and asking users to attach the 'Upload ID' to their bug report so we can correlate the uploaded files should work totally fine! 
+   			(Or we could perhaps even correlate the files via timestamp.)
+   		- If that's not enough: netlify.
+     			- Contra vs mega.nz: 	1. Way more work for us. 2. Uploaded files probably harder to handle for us.
+			- Pro vs mega.nz: 	1. 100 GB free storage 2. More optimization possibility for UX [a) Letting MMF app upload files automatically b) embedding an uploading UI into the Feedback Assistant page c) Users don't have to manually share the 'Upload ID' from mega]
+
+The description for a *personalized* file request could be this:
+
+1. Upload the screenshot you took & your sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and include it in your bug report (or in a followup message). That way, I can correlate your files with your report || Thank you!
+
+(mega.nz doesn't support linebreaks [Mar 2025] so we used '||' instead.)
 
 ## Notes from investigating first sysdiagnose we've been sent (Mar 17 2025)
 
