@@ -444,15 +444,15 @@ The description for a *personalized* file request could be this:
 Please upload the screenshot you took & your sysdiagnose archive (whose file extension should be .tar.gz). Thank you!
 ```
 
-The description for a *public* file request could be this: 	(3 different variants for 3 different communication channels: Feedback Assistant, Email, GH Issue.)
+The description for a *public* file request could be this: 	(3 different variants for 3 different communication channels: Feedback Assistant, Email, GH Issue.) (Update: Actually, the email one might not make sense, since for those we can create personalized file requests.)
 ```
-1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and include it in your bug report. That way, I can correlate your files with your report || Thank you!
-```
-```
-1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and send it to me via email. That way, I can correlate your files with your report || Thanks!
+Please 1. Upload your screenshot and the sysdiagnose archive (with the file extension '.tar.gz') || 2. Copy the 'Upload ID' (shown below) and add it to your Bug Report. That way I'll know which files belong to which report. || Thank you!
 ```
 ```
-1. Upload your screenshot & sysdiagnose archive (whose file extension should be .tar.gz) || 2. Note the 'Upload ID' below and post it in the GitHub Issue. That way, I can correlate your files with your report || Thanks very much!
+Please 1. Upload your screenshot and the sysdiagnose archive (with the file extension '.tar.gz') || 2. Copy the 'Upload ID' (shown below) and send it to me via Email. That way I'll know which files belong to which report. || Thank you!
+```
+```
+Please 1. Upload your screenshot and the sysdiagnose archive (with the file extension '.tar.gz') || 2. Copy the 'Upload ID' (shown below) and post it under our GitHub Issue. That way I'll know which files belong to which report. || Thank you very much!
 ```
 
 (mega.nz doesn't support linebreaks [Mar 2025] so we used '||' instead.)
