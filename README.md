@@ -385,11 +385,11 @@ Perhaps we could also link users to Apple's PDF documents with sysdiagnose instr
                 - Proton Drive
                 	- Doesn't have a file-request feature
 
-Update [Mar 20 2025]:
-	Concern: 
+- Update [Mar 20 2025]:
+	- Concern: 
 		Ideally users should be able to upload sysdiagnose files right from the place where they file their feedback (Email to me, MMF Feedback Assistant, GitHub Issues)
 	   	  In the 'Email to me' case I can send them the Mega.nz upload link - but what about the 'MMF Feedback Assistant' and 'GitHub Issues' cases?
-	Solutions approaches:
+	- Solutions approaches:
  		- Private mega.nz file request via email
    			- This means: We're manually asking users on GitHub to send us an email so we can share a *private, custom* mega.nz upload link with them.
       			- Downside: Introduces several manual extra steps for us and the user, which wastes time and lowers our chances of getting sysdiagnose reports.
@@ -431,7 +431,7 @@ Update [Mar 20 2025]:
 					- -> Sounds totally good enough for our use case
      			- <[Mar 2025] I'm currently not aware of other competitors to AWS, Vercel, Netlify, and I also didn't Google for any>
 
-	Conclusion: [Mar 2025]
+	- Conclusion: [Mar 2025]
  		- Fine solution for now: Simply sharing our mega.nz upload links publicly and asking users to attach the 'Upload ID' to their bug report so we can correlate the uploaded files should work totally fine! 
    			(Or we could perhaps even correlate the files via timestamp.)
    		- If that's not enough: netlify.
