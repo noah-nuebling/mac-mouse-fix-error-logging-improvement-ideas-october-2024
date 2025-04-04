@@ -221,6 +221,7 @@ We do that by creating and distributing special 'debug builds' that produce and 
 - ... So you can more easily differentate the debug version.
 - Also helps users not accidentally keep using the debug build long-term.
 - E.g. `3.0.4 Beta 1 (Debug)`
+    - For the third debug version, we used `3.0.4 Beta 1 (Debug v3)`
 
 ### 1.3) Remove the NDEBUG flags
 
