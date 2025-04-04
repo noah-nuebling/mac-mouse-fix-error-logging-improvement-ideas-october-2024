@@ -230,7 +230,14 @@ From the Swift `SWIFT_ACTIVE_COMPILATION_CONDITIONS` and the C `GCC_PREPROCESSOR
 -> That way assert() calls get enabled.
 	(Actually, isn't it better to not have assert() crash the app so it behaves exactly like a non-'verbose-debug-logging' build?)
 
-### 1.4) Add this dict to Info.plist under the `OSLogPreferences` key.
+### 1.4) Add DEBUG flags
+
+In the same places you removed the NDEBUG flags
+
+-> That way, runningPreRelease() definitely returns true, and some code sections wrapped in `#if DEBUG` get enabled.
+	([Apr 2025] Not really necessary for versions containing 'Beta' or 'Alpha' since runningPreRelease() already returns true for them.)
+
+### 1.5) Add this dict to Info.plist under the `OSLogPreferences` key.
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
